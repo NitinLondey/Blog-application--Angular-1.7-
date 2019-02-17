@@ -1,17 +1,17 @@
-var app = angular.module('BlogApp');
+var BlogApp = angular.module('BlogApp', ['socialLogin']);
 
-app.controller('LoginController', function($scope, $rootScope, $stateParams, $state, LoginService) {
-  $rootScope.title = "AngularJS Login Sample";
-  
-  $scope.formSubmit = function() {
-    if(LoginService.login($scope.username, $scope.password)) {
-      $scope.error = '';
-      $scope.username = '';
-      $scope.password = '';
-      $state.transitionTo('home');
-    } else {
-      $scope.error = "Incorrect username/password !";
-    }   
-  };
-  
-});
+BlogApp.module.controller('LoginController','$window','$scope',function($scope) {
+        $scope.emailId = $window.emailId;
+        this.user = {
+            emailId:$window.emailId
+        
+        };
+ 
+        this.submit = function() {
+           console.log('User clicked register', this.user);
+           window.location.href()
+        };
+
+
+
+    });

@@ -1,3 +1,11 @@
-<textarea data-ui-tinymce data-ng-model="modal.one"></textarea>
-change in the input doesn't change the textarea<br>
-<input ng-model="modal.one">
+<html ng-app="BlogApp">
+    <head><title></title></head>
+
+    <body ng-controller="TextController as ctrl">
+        <textarea id="full-featured"  ui-tinymce="tinymceOptions" ng-model="tinymceModel"></textarea>
+        change in the input doesn't change the textarea<br>
+      
+    </body>
+</html>
+
+

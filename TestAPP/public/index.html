@@ -1,14 +1,76 @@
 <!DOCTYPE html>
 <head>
+    <meta name="google-signin-client_id" content="972832099175-8krfbv5hni4gpjfdihl52vmchrqn7kha.apps.googleusercontent.com">
   <script type="text/javascript" src="bower_components/tinymce/tinymce.js"></script>
-  <script type="text/javascript" src="bower_components/angular/angular.js"></script>
+  <script src="libs/angular/angular-route.js"></script>
+  <script src="libs/angular/angular.js"></script>
+
   <script type="text/javascript" src="bower_components/angular-ui-tinymce/src/tinymce.js"></script>
+  <script src="bower_components/angularjs-social-login/angularjs-social-login.js"></script>
   <script type="text/javascript" src="app.js"></script>
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
+  <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+		integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+		crossorigin="anonymous"></script>
+	 <link rel="stylesheet"
+    href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+    integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+    crossorigin="anonymous"/>
+
 </head>
-<body ng-app="BlogApp">
-  <form method="post" ng-controller="TextController">
-    <textarea ui-tinymce="tinymceOptions" ng-model="tinymceModel"></textarea>
-    <button ng-click="getContent()">Get content</button>
-    <button ng-click="setContent()">Set content</button>
-  </form>
+<body ng-app="BlogApp" ng-controller="Logincontroller" id="div1">
+  
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand">BLOG</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+       <form class="form-inline my-2 my-lg-0">
+          <div class="g-signin2" data-onsuccess="onSignIn"></div>
+
+      </form> 
+
+
+    </div>
+  </nav>
+  <script>  
+
+
+  function onSignIn(googleUser) {
+   // var $element = $('#div1');
+   // var scope = angular.element($element).scope();
+    var profile = googleUser.getBasicProfile();
+    var ID=  profile.getId();
+   var Name=  profile.getName();
+    var Email=  profile.getEmail();
+    var id_token = googleUser.getAuthResponse().id_token;
+    console.log("Name: " + Name);
+    console.log("ID: " + Email);
+  //  console.log(scope);
+  //  scope.Name=profile.getName();
+   // console.log(scope.Name);
+   $.ajax({
+						type : "POST",
+						url : "/login",
+						data : "&user_name=" +Name + 
+								 "&user_email="
+								+ Email+ "token_id=" + id_token,
+  }
+
+   
+
+  function signOut() {
+    var auth2 = gapi.auth2.getAuthInstance();
+    auth2.signOut().then(function () {
+      console.log('User signed out.');
+    });
+  }
+</script>
+
 </body>
